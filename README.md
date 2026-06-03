@@ -12,13 +12,14 @@ Part of the [unpins](https://unpins.org) project — native single-binary builds
 
 ## Usage
 
-Run brotli without installing:
+Run the `brotli` program with [unpin](https://github.com/unpins/unpin):
 
 ```bash
-unpin brotli --version
+unpin brotli file          # compress   -> file.br
+unpin brotli -d file.br    # decompress
 ```
 
-To install onto your PATH:
+To install it onto your PATH:
 
 ```bash
 unpin install brotli
