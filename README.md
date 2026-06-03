@@ -10,18 +10,18 @@ general-purpose compressor.
 
 Part of the [unpins](https://unpins.org) project — native single-binary builds with no third-party runtime dependencies.
 
-## Installation
+## Usage
 
-Install with [unpin](https://github.com/unpins/unpin):
+Run brotli without installing:
 
 ```bash
-unpin brotli
+unpin brotli --version
 ```
 
-Or run without installing:
+To install onto your PATH:
 
 ```bash
-unpin run brotli
+unpin install brotli
 ```
 
 ## Build locally
