@@ -1,14 +1,13 @@
 # brotli
 
-Standalone build of [brotli](https://github.com/google/brotli) — Google's
-general-purpose compressor.
+[brotli](https://github.com/google/brotli) — Google's general-purpose compressor. A single self-contained binary, built natively for Linux, macOS, and Windows.
 
 [![CI](https://github.com/unpins/brotli/actions/workflows/brotli.yml/badge.svg)](https://github.com/unpins/brotli/actions)
 ![Linux](https://img.shields.io/badge/Linux-✓-success?logo=linux&logoColor=white)
 ![macOS](https://img.shields.io/badge/macOS-✓-success?logo=apple&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-✓-success?logo=windows&logoColor=white)
 
-Part of the [unpins](https://unpins.org) project — native single-binary builds with no third-party runtime dependencies.
+Part of the [unpins](https://unpins.org) catalog; install it with [`unpin`](https://github.com/unpins/unpin): `unpin install brotli`.
 
 ## Usage
 
@@ -25,6 +24,9 @@ To install it onto your PATH:
 unpin install brotli
 ```
 
+## Man pages
+
+The `brotli` man page is embedded in the binary; read it with `unpin man brotli`.
 ## Build locally
 
 ```bash
@@ -55,6 +57,3 @@ The [Releases](https://github.com/unpins/brotli/releases) page has standalone bi
   `postInstall`, Windows via a curated `winManRoot`) so only the CLI's
   `brotli.1` is embedded.
 
-## Man pages
-
-The `brotli` man page is embedded in the binary; read it with `unpin man brotli`.
