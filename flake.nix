@@ -1,5 +1,5 @@
 {
-  description = "Standalone build of brotli";
+  description = "brotli as a single self-contained binary";
 
   nixConfig = {
     extra-substituters = [ "https://unpins.cachix.org" ];
