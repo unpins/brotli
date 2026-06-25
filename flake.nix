@@ -8,17 +8,14 @@
 
   inputs.unpins-lib.url = "github:unpins/nix-lib";
 
-  # brotli ships a single CLI (`brotli`, which compresses and — with -d —
-  # decompresses), so this is a plain single-binary build, no multicall.
-  # Unlike the Info-ZIP/GNU archive tools, brotli is portable CMake C with no
-  # Unix-only headers, so Windows goes through mingw (not Cosmopolitan).
+  # Single CLI (`brotli`, `-d` to decompress) — plain single-binary, no
+  # multicall. Portable CMake C, no Unix-only headers, so Windows goes via
+  # mingw, not Cosmopolitan.
   #
-  # The nixpkgs brotli installs library reference pages under man3
-  # (constants.h.3, decode.h.3, encode.h.3, types.h.3) alongside the CLI's
-  # brotli.1. We ship only the tool, so drop man3 on every target — otherwise
-  # withMan would embed the header docs too. The same `prune` runs on native
-  # AND windows, so each build harvests its OWN curated man (just brotli.1):
-  # the mingw cross installs brotli.1 like every other target, no graft needed.
+  # nixpkgs installs library man3 pages (constants/decode/encode/types.h.3)
+  # beside brotli.1; ship only the tool, so `prune` drops man3 on every target
+  # (else withMan embeds them). Same prune native + windows → the mingw cross
+  # harvests its own brotli.1, no graft.
   outputs = { self, unpins-lib }:
     let
       ulib = unpins-lib.lib;
@@ -36,6 +33,12 @@
       name = "brotli";
       smoke = [ "--version" ];
       smokePattern = "brotli 1";
+
+      engine = "unpin-llvm";
+      multicall = {
+        programs = [{ name = "brotli"; }];
+      };
+
       build = pkgs: pkgs.pkgsStatic.brotli.overrideAttrs prune;
       windowsBuild = pkgs: (ulib.mingwStaticCross pkgs).brotli.overrideAttrs prune;
     };
