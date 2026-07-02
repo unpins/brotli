@@ -19,14 +19,20 @@
   outputs = { self, unpins-lib }:
     let
       ulib = unpins-lib.lib;
-      prune = old: {
+      # prune library man3 pages + wire the native test suite. Kept as a
+      # drv->drv tune (not a bare attr override) so doCheck can read the
+      # build/host platforms off the derivation.
+      tune = drv: drv.overrideAttrs (old: {
+        # Run brotli's ctest roundtrip suite on native runners; auto-skips on
+        # every cross the build host can't execute. 12/12 pass under static-musl.
+        doCheck = drv.stdenv.buildPlatform.canExecute drv.stdenv.hostPlatform;
         postInstall = (old.postInstall or "") + "\n" + ''
           for o in $outputs; do
             d="''${!o}"
             rm -rf "$d/share/man/man3"
           done
         '';
-      };
+      });
     in
     ulib.mkStandaloneFlake {
       inherit self;
@@ -39,7 +45,7 @@
         programs = [{ name = "brotli"; }];
       };
 
-      build = pkgs: pkgs.pkgsStatic.brotli.overrideAttrs prune;
-      windowsBuild = pkgs: (ulib.mingwStaticCross pkgs).brotli.overrideAttrs prune;
+      build = pkgs: tune pkgs.pkgsStatic.brotli;
+      windowsBuild = pkgs: tune (ulib.mingwStaticCross pkgs).brotli;
     };
 }
