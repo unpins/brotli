@@ -13,9 +13,9 @@
   # mingw, not Cosmopolitan.
   #
   # nixpkgs installs library man3 pages (constants/decode/encode/types.h.3)
-  # beside brotli.1; ship only the tool, so `prune` drops man3 on every target
-  # (else withMan embeds them). Same prune native + windows → the mingw cross
-  # harvests its own brotli.1, no graft.
+  # beside brotli.1; ship only the tool, so `tune` drops man3 on every target
+  # (else withMan embeds them). Same tune native + windows → the mingw cross
+  # harvests its own brotli.1, so no winManRoot and no graft.
   outputs = { self, unpins-lib }:
     let
       ulib = unpins-lib.lib;

@@ -24,9 +24,6 @@ To install it onto your PATH:
 unpin install brotli
 ```
 
-## Man pages
-
-The `brotli` man page is embedded in the binary; read it with `unpin man brotli`.
 ## Build locally
 
 ```bash
@@ -48,12 +45,8 @@ The [Releases](https://github.com/unpins/brotli/releases) page has standalone bi
 
 ## Build notes
 
-- Single binary — `brotli` both compresses and (with `-d`) decompresses, so
-  there is no multicall to assemble.
-- **Windows** is built with mingw (not Cosmopolitan): brotli is portable CMake
-  C with no Unix-only headers, so the cross compiles cleanly.
-- The upstream install adds library reference pages under `man3`
-  (`decode.h.3`, `encode.h.3`, …); those are dropped on every target (native in
-  `postInstall`, Windows via a curated `winManRoot`) so only the CLI's
-  `brotli.1` is embedded.
+- **Platforms:** Linux, macOS, Windows.
+- **Single binary:** `brotli` both compresses and (with `-d`) decompresses, so there is no multicall to assemble.
+- **Tests:** brotli's own ctest roundtrip suite runs on every build the runner can execute (12/12 under static-musl). The crosses it cannot run are covered by the `--version` smoke only.
+- **Man pages:** the `brotli.1` page is embedded; read it with `unpin man brotli`. The `libbrotli` C API pages (`decode.h.3`, `encode.h.3`, …) are not — this binary ships the program, not a linkable library.
 
